@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <div class="category_form">
+      <% @category.each do |category| %>
+        <div class="category_name">
+          <!-- カテゴリ名(category)を表示 -->
+          <p><%= category.category %></p>
+        </div>
+        <div class="task">
+          <ul>
+            <!-- カテゴリIDに紐づいたタスクをeachで回して表示する -->
+            <% TodoList.where(category_id: category.id).each do |todo| %>
+              <li><%= todo.task %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>
