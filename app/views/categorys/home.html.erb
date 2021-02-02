@@ -1,16 +1,22 @@
 <html>
   <body>
     <div class="category_form">
+      <%= link_to "CreateCategoryPage", "/createPage" %>
       <% @category.each do |category| %>
         <div class="category_name">
           <!-- カテゴリ名(category)を表示 -->
           <p><%= category.category %></p>
+          <%= link_to "AddTask", "createPage/#{category.id}" %>
+          <%= link_to "EditCategory", "category/editPage/#{category.id}" %>
+          <%= link_to "Delete", "category/delete/#{category.id}", method: :delete %>
         </div>
         <div class="task">
           <ul>
             <!-- カテゴリIDに紐づいたタスクをeachで回して表示する -->
             <% TodoList.where(category_id: category.id).each do |todo| %>
               <li><%= todo.task %></li>
+              <%= link_to "EditTask", "todoList/editPage/#{todo.id}" %>
+              <%= link_to "Delete", "todoList/delete/#{todo.id}", method: :delete %>
             <% end %>
           </ul>
         </div>

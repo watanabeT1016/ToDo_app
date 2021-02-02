@@ -1,0 +1,10 @@
+<html>
+    <%= form_tag "/create/#{params[:id]}", method: :get, class: "" do %>
+    <%= text_field_tag :newTask, params[:newTask], class: "form-control" %>
+    <div>
+        <%= submit_tag "AddTask" %>
+        <!-- カテゴリ一覧画面へのリンク -->
+        <%= link_to "GoToCategoryPage", "/" %>
+    </div>
+    <% end %>
+</html>
