@@ -57,7 +57,8 @@ class CategoriesController < ApplicationController
   private
 
     def category_params
-      params.require(:category).permit(:category, todo_lists_attributes:[:task, :category_id])
+      #params.require(:category).permit(:category, todo_lists_attributes:[:task, :category_id])
+      params.require(:category).permit(:category, todo_lists_attributes:[:task, :id])
     end
     
     
