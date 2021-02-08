@@ -1,4 +1,5 @@
 <html>
+    <%= render("share/flash") %>
     <%= form_tag "/create/#{params[:id]}", method: :get, class: "" do %>
     <%= text_field_tag :newTask, params[:newTask], class: "form-control" %>
     <div>

@@ -1,0 +1,13 @@
+<%= form_for @category do |f| %>
+  <%= f.label "NewCategory" %> </br>
+  <%= f.text_area :category %> </br>
+  
+  <%= f.fields_for :todo_lists do |ff| %>
+    <%= ff.label "NewTask1" %> </br>
+    <%= ff.text_area :task %> </br>
+    <%= ff.label "NewTask2" %> </br>
+    <%= ff.text_area :task %> </br>
+  <% end %>
+  
+  <%= f.submit "CreateCategory" %>
+<% end %>

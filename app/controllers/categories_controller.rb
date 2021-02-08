@@ -1,4 +1,4 @@
-class CategorysController < ApplicationController
+class CategoriesController < ApplicationController
   
   def home
     #カテゴリを全件取得
@@ -6,20 +6,23 @@ class CategorysController < ApplicationController
     
     #categoryテーブルのブランクチェックをして空かnilならカテゴリの作成ページへ
     if @category.blank?
-      render("createPage")
+      #render("new")
     end
   end
   
-  def createPage
+  def new
+    @category = Category.new
+    @category.todo_lists.build
   end
   
   def create
-    category = Category.create(category: params[:newCategory])
+    category = Category.new(category_params)
+    
     if category.save
       redirect_to("/")
       flash[:success] = "Created new Category!"
     else
-      render("createPage")
+      redirect_back(fallback_location: "create")
     end
   end
   
@@ -29,9 +32,13 @@ class CategorysController < ApplicationController
   end
   
   def edit
-    category = Category.find_by(id: params[:id])
-    category.update_attributes(category: params[:editCategory])
-    redirect_to ("/")
+    @category = Category.find_by(id: params[:id])
+    if @category.update_attributes(category: params[:editCategory])
+      flash[:success] = "EditSuccess!"
+      redirect_to ("/")
+    else
+      redirect_back(fallback_location: "edit")
+    end
   end
   
   def destroy
@@ -40,10 +47,18 @@ class CategorysController < ApplicationController
     #取得できてるなら削除してホームに飛ぶ。
     if !category.blank?
       category.destroy
+      flash[:success] = "DeleteSuccess!"
       #リロードの動き
       #redirect_to("/")
       redirect_back(fallback_location: "/")
     end
   end
-  
+
+  private
+
+    def category_params
+      params.require(:category).permit(:category, todo_lists_attributes:[:task, :category_id])
+    end
+    
+    
 end

@@ -1,10 +1,12 @@
 <html>
-    <%= form_tag "/todoList/edit/#{params[:id]}", method: :get, class: "" do %>
-    <%= text_field_tag :editTask, @task, class: "form-control input-search-word" %>
-      <div>
-        <%= submit_tag "EditTask" %>
-        <!-- カテゴリ一覧画面へのリンク -->
-        <%= link_to "GoToCategoryPage", "/" %>
-      </div>
-    <% end %>
+
+  <%= render("share/flash") %>
+  <%= form_tag "/todoList/edit/#{params[:id]}", method: :get, class: "" do %>
+  <%= text_field_tag :editTask, @task, class: "form-control input-search-word" %>
+    <div>
+      <%= submit_tag "EditTask" %>
+      <!-- カテゴリ一覧画面へのリンク -->
+      <%= link_to "GoToCategoryPage", "/" %>
+    </div>
+  <% end %>
 </html>

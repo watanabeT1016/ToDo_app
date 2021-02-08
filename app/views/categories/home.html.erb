@@ -1,0 +1,43 @@
+<html>
+  <body>
+    <%= render("share/flash") %>
+    <div class="category_form">
+      <%= link_to "CreateCategoryPage", "/new" %>
+      <% @category.each do |category| %>
+        <div class="category_name">
+          <!-- カテゴリ名(category)を表示 -->
+          <%= category.category %>
+          <div>
+            <%= link_to "AddTask", "new/#{category.id}" %>
+            <%= link_to "EditCategory", "categories/editPage/#{category.id}" %>
+            <%= link_to "Delete", "categories/delete/#{category.id}", method: :delete %>
+          </div>
+        </div>
+        <div class="task">
+          <ul>
+            <!-- カテゴリIDに紐づいたタスクをeachで回して表示する -->
+            <% TodoList.where(category_id: category.id).each do |todo| %>
+              <!-- completeカラムがtrueならクラス情報追加。タスク名に取り消し線を引く。 -->
+              <% if todo.complete %>
+                <li class="complete"><%= todo.task %></li>
+                <%= form_tag "/todoList/completeSetFalse/#{todo.id}", method: :get, class: "" do %>
+                  <!-- タスク完了済みならキャンセルボタンを表示 -->
+                  <%= submit_tag "Cancel" %>
+                <% end %>
+              <% else %>
+                <li><%= todo.task %></li>
+                <%= form_tag "/todoList/completeSetTrue/#{todo.id}", method: :get, class: "" do %>
+                  <!-- タスク未完了ならコンプリートボタンを表示 -->
+                  <%= submit_tag "Complete!" %>
+                <% end %>
+              <% end %>
+              
+              <%= link_to "EditTask", "todoList/editPage/#{todo.id}" %>
+              <%= link_to "Delete", "todoList/delete/#{todo.id}", method: :delete %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>
